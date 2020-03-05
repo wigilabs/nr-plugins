@@ -1,0 +1,12 @@
+# /etc/systemd/system/zendesk.service
+[Unit]
+Description=zendesk
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/bin/zendesk
+
+[Install]
+WantedBy=multi-user.target
