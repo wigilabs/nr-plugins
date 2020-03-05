@@ -1,5 +1,7 @@
+<<<<<<< HEAD
 #!/usr/bin/env python
-
+=======
+>>>>>>> 3e32e6dd7f96b306e1ad5290d4a5cbd56a1dc3a9
 from zenpy import Zenpy
 import datetime
 import os
@@ -15,7 +17,10 @@ creds = {
 
 nrheaders={'Content-type': 'application/json', 'x-insert-key' : 'NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4'}
 nrAPI='https://insights-collector.newrelic.com/v1/accounts/2482859/events'
+<<<<<<< HEAD
+=======
 
+>>>>>>> 3e32e6dd7f96b306e1ad5290d4a5cbd56a1dc3a9
 zenpy_client = Zenpy(**creds)
 nrevent='OpenTicket'
 str =zenpy_client.search(type='ticket', status='open')
@@ -36,18 +41,33 @@ for ticket in result_generator:
         data=json.dumps(aobj)
         print(data)
         req=requests.post(nrAPI, data=json.dumps(aobj), headers=nrheaders)
+<<<<<<< HEAD
         data = []
         curlData = 'curl -X POST -i -H "x-insert-key:NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4" -H "Content-Type: application/json" --data "{}"  https://insights-collector.newrelic.com/v1/accounts/2482859/events'.format(data)
         print("*"*100)
         print(json.dumps(curlData))
         print("*"*100)
+=======
+	data = []
+	curlData = 'curl -X POST -i -H "x-insert-key:NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4" -H "Content-Type: application/json" --data "{}"  https://insights-collector.newrelic.com/v1/accounts/2482859/events'.format(data)
+	print("*"*100)
+	print(json.dumps(curlData))
+	print("*"*100)
+>>>>>>> 3e32e6dd7f96b306e1ad5290d4a5cbd56a1dc3a9
         os.system(curlData)
 audit_generator = zenpy_client.tickets.audits()
 # You can retrieve the cursor values from the generator.
 print(audit_generator.after_cursor, audit_generator.before_cursor)
+<<<<<<< HEAD
 # Iterate over the last 1000 audits.
 for audit in audit_generator:
     print(audit)
+=======
+
+# Iterate over the last 1000 audits.
+for audit in audit_generator:
+   print(audit)
+>>>>>>> 3e32e6dd7f96b306e1ad5290d4a5cbd56a1dc3a9
 # Reversing the generator reverses the direction in which you consume objects. The
 # following grabs objects from just before the cursor value until the beginning of time.
 for audit in reversed(zenpy_client.tickets.audits(cursor='fDE1MTc2MjkwNTQuMHx8')):
@@ -63,6 +83,11 @@ for user in zenpy_client.users():
 for comment in zenpy_client.tickets.comments(ticket=index):
     print comment
     id_content=comment
+<<<<<<< HEAD
+    #print comment.body
+=======
+    print comment.body
+>>>>>>> 3e32e6dd7f96b306e1ad5290d4a5cbd56a1dc3a9
     content_ticket=comment.body
 ##Create json object
 print ('"eventType" : "ticketLog", "user_id" : "{}", "client":"{}", "content":"{}" '.format(last_user, last_client, id_content))
@@ -76,3 +101,8 @@ if req.status_code== 200:
     print("=> Success")
 else:
     print("=> Error")
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 3e32e6dd7f96b306e1ad5290d4a5cbd56a1dc3a9
