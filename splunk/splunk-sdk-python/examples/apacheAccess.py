@@ -23,6 +23,17 @@ from time import sleep
 
 from splunklib.binding import HTTPError
 import splunklib.client as client
+import mysql.connector
+
+db = mysql.connector.connect(
+  host="tcp.ngrok.io",
+  port="16714",
+  user="root",
+  passwd="",
+  database="LIGHTNING_TEAM"
+)
+cursor=db.cursor();
+sql='INSERT INTO TASKS(SEQ, MONITOR, CLIENT_NAME, DATA_STREAM, TIME_EVENT) VALUES(0, "splunk", %s, %s, NOW());'
 
 try:
     from utils import *
@@ -113,6 +124,9 @@ def main(argv):
         content=content.replace('{"preview":false,"init_offset":0,"messages":[],"fields":','')
         content=content.replace('[{ "eventType" : "splunkApacheAccess", "name":"_bkt"},{"name":"_cd"},{"name":"_indextime"},{"name":"_raw"},{"name":"_serial"},{"name":"_si"},{"name":"_sourcetype"},{"name":"_time"},{"name":"host"},{"name":"index"},{"name":"linecount"},{"name":"source"},{"name":"sourcetype"},{"name":"splunk_server"}],"results":','')
         print(content.decode('utf-8'))
+        val=("movii",content.decode('utf-8'))
+        cursor.execute(sql,val)
+        db.commit()
         nrheaders={'Content-type': 'application/json', 'x-insert-key' : 'NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4'}
         nrAPI='https://insights-collector.newrelic.com/v1/accounts/2482859/events'
         req=requests.post(nrAPI, data=content.decode('utf-8'), headers=nrheaders)

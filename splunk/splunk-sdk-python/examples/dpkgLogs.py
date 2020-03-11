@@ -115,15 +115,15 @@ def main(argv):
     while True:
         content = results.read(1024)
         if len(content) == 0: break
-        content=content.replace('{"preview":false,"init_offset":0,"messages":[],"fields":[{"name":"_bkt"},{"name":"_cd"},{"name":"_indextime"},{"name":"_raw"},{"name":"_serial"},{"name":"_si"},{"name":"_sourcetype"},{"name":"_subsecond"},{"name":"_time"},{"name":"host"},{"name":"index"},{"name":"linecount"},{"name":"source"},{"name":"sourcetype"},{"name":"splunk_server"}],"results":',' ')
+        content=content.replace('[{ "eventType" : "splunkUpdateLogs", "name":"_bkt"},{"name":"_cd"},{"name":"_indextime"},{"name":"_raw"},{"name":"_serial"},{"name":"_si"},{"name":"_sourcetype"},{"name":"_time"},{"name":"host"},{"name":"index"},{"name":"linecount"},{"name":"source"},{"name":"sourcetype"},{"name":"splunk_server"}],"results":',' ')
         content=content[:-19]
         content=content.replace('"_si":["debian-splunk","main"],','')
-        content=content.replace('[{','[{ "eventType" : "splunkKernel", ')
+        content=content.replace('[{','[{ "eventType" : "splunkUpdateLogs", ')
         content=content.replace('{"preview":false,"init_offset":0,"messages":[],"fields":','')
-        content=content.replace('[{ "eventType" : "splunkKernel", "name":"_bkt"},{"name":"_cd"},{"name":"_indextime"},{"name":"_raw"},{"name":"_serial"},{"name":"_si"},{"name":"_sourcetype"},{"name":"_time"},{"name":"host"},{"name":"index"},{"name":"linecount"},{"name":"source"},{"name":"sourcetype"},{"name":"splunk_server"}],"results":','')
-        content=content.replace('"_si":["debian-splunk","history"],','')
-        print(content.decode('utf-8'))
-        val=("movii",content.decode('utf-8'))
+        content=content.replace('[{ "eventType" : "splunkUpdateLogs", "name":"_bkt"},{"name":"_cd"},{"name":"_indextime"},{"name":"_raw"},{"name":"_serial"},{"name":"_si"},{"name":"_sourcetype"},{"name":"_time"},{"name":"host"},{"name":"index"},{"name":"linecount"},{"name":"source"},{"name":"sourcetype"},{"name":"splunk_server"}],"results":','')
+        content=content.decode('utf-8')
+        print(content)
+        val=("movii",content)
         cursor.execute(sql,val)
         db.commit()
         nrheaders={'Content-type': 'application/json', 'x-insert-key' : 'NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4'}
