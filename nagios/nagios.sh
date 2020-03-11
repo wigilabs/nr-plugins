@@ -1,2 +1,2 @@
 #!/bin/bash
-cp api.php /usr/local/nagios/share
+cp nr-api.php /usr/local/nagios/share
