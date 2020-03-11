@@ -3,7 +3,8 @@
 
 > Utilize el SDK de splunk para extraer los datos de monitoreo y logs.
 
-Clone este repositorio y añada las siguientes lineas a las tares de cron ( Utilice el comando crontab -e).
+Clone este repositorio y añada las siguientes lineas a las tares de cron ( Utilice el comando crontab -e), los datos de monitoreo
+son, errores de apache, logs de acceso, estado del kernel, logs de servicios.
 ```sh
 * * * * * python /opt/splunk-sdk-python/examples/apacheErrors.py 'search source="/var/log/apache2/error.log" host="debian-splunk" sourcetype="apache_error" | HEAD 1' --output_mode=json
 * * * * * python /opt/splunk-sdk-python/examples/apacheAccess.py 'search source="/var/log/apache2/access.log" host="debian-splunk" index="history" sourcetype="access" | HEAD 1' --output_mode=json
