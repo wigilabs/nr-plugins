@@ -177,41 +177,6 @@ if response1.status_code == 200:
 elif response.status_code == 404:
     print('Not Found.')
 
-
-##################################################
-
-#if response2.status_code == 200:
-    #print(">>> maintance : ",response2)
-    #print(">>> Content : ", json.dumps(response2.json()))
-    #current = ast.literal_eval(json.dumps(response2.json()["result"]))
-    #print(current)
-    #current[0].update({"eventType":"zabbixHostTemplate"})
-    #current[1].update({"eventType":"zabbixHostTemplate"})
-    #print("[========================================================================================================================================================================]")
-    #local=str(current[0])[:-2].replace("[","")
-    #remote=str(current[1])[:-2].replace("[","")
-    #local=local.replace("u'interfaces': {","")
-    #remote=remote.replace("u'interfaces': {","")
-    #local='['+local+']'
-    #remote='['+remote+']'
-##Enviar hostlist a new relic
-    #local=local.replace("'interfaces': {","")
-    #remote=remote.replace("'interfaces': {","")
-    #local=local.replace("'interfaces': {","")
-    #remote=remote.replace("\'","\"")
-    #local=local.replace("\'","\"")
-    #print(local)
-    #print(remote)
-    #os.system('curl -X POST -i -H "x-insert-key:NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4" -H "Content-Type: application/json" --data "+ json.dumps(local).json() +" https://insights-collector.newrelic.com/v1/a$
-    #os.system('curl -X POST -i -H "x-insert-key:NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4" -H "Content-Type: application/json" --data "+ json.dumps(remote).json() +" https://insights-collector.newrelic.com/v1/$
-    #nr
-    #customEvent1=requests.post(nrAPI, data=local, headers=nrheaders)
-    #customEvent2=requests.post(nrAPI, data=remote, headers=nrheaders)
-#elif response.status_code == 404:
-#    print('Not Found.')
-
-##################################################
-
 if trigger1.status_code == 200:
     print(">>> ZabbixAgent : ",trigger1)
     print(">>> Content : ", json.dumps(trigger1.json()))
