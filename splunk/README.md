@@ -1,10 +1,9 @@
-# Nagios
+# Splunk
 
 
-> Expone data de los servicios para obtenerla con una solicitud GET por medio de REST API
+> Utilize el SDK de splunk para extraer los datos de monitoreo y logs.
 
-Dele permisos de ejecucion y ejecute el script de instalacion, si desea hacerlo manualmente copie y peqgue el archivo nr-api.php 
-en la ruta /usr/local/nagios/share.
+La configuracion.
 ```sh
 $ chmod +x install.sh && ./install.sh
 ```
