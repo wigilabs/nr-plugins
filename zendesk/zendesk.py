@@ -80,7 +80,7 @@ for comment in zenpy_client.tickets.comments(ticket=index):
 print ('"eventType" : "ticketLog", "user_id" : "{}", "client":"{}", "content":"{}" '.format(last_user, last_client, id_content))
 str='"eventType" : "ticketLog", "user_id" : "{}", "client":"{}", "content":"{}" '.format(last_user, last_client, id_content)
 obj='[{' + str + '}]'
-val=("movii",strAgent.decode('utf-8'))
+val=("movii",obj.decode('utf-8'))
 cursor.execute(sql,val)
 db.commit()
 URL='https://insights-collector.newrelic.com/v1/accounts/2482859/events'
