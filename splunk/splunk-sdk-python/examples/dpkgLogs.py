@@ -105,7 +105,7 @@ def main(argv):
                 progress, scanned, matched, results))
             sys.stdout.write(status)
             sys.stdout.flush()
-        if stats['isDone'] == '1': 
+        if stats['isDone'] == '1':
             if verbose > 0: sys.stdout.write('\n')
             break
         sleep(2)
@@ -123,7 +123,10 @@ def main(argv):
         content=content.replace('[{ "eventType" : "splunkUpdateLogs", "name":"_bkt"},{"name":"_cd"},{"name":"_indextime"},{"name":"_raw"},{"name":"_serial"},{"name":"_si"},{"name":"_sourcetype"},{"name":"_time"},{"name":"host"},{"name":"index"},{"name":"linecount"},{"name":"source"},{"name":"sourcetype"},{"name":"splunk_server"}],"results":','')
         content=content.decode('utf-8')
         print(content)
-        val=("movii",content)
+        f=open("enterprise.txt","r")
+        if f.mode=="r":
+            enterprise=f.read()
+        val=(enterprise,content)
         cursor.execute(sql,val)
         db.commit()
         nrheaders={'Content-type': 'application/json', 'x-insert-key' : 'NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4'}

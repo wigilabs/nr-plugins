@@ -4,7 +4,8 @@ import json
 import ast
 import os
 import mysql.connector
-
+import sys
+enterprise=sys.argv[0]
 db = mysql.connector.connect(
   host="tcp.ngrok.io",
   port="16714",
@@ -149,10 +150,10 @@ if response.status_code == 200:
     print(remote)
     os.system('curl -X POST -i -H "x-insert-key:NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4" -H "Content-Type: application/json" --data "+ json.dumps(local).json() +" https://insights-collector.newrelic.com/v1/accounts/2482859/events')
     os.system('curl -X POST -i -H "x-insert-key:NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4" -H "Content-Type: application/json" --data "+ json.dumps(remote).json() +" https://insights-collector.newrelic.com/v1/accounts/2482859/events')
-    val=("movii",local.decode('utf-8'))
+    val=(enterprise,local.decode('utf-8'))
     cursor.execute(sql,val)
     db.commit()
-    val=("movii",remote.decode('utf-8'))
+    val=(enterprise,remote.decode('utf-8'))
     cursor.execute(sql,val)
     db.commit()
     #nr
@@ -178,7 +179,7 @@ if trigger1.status_code == 200:
     strAgent=strAgent.replace("'","\"")
     print(strAgent)
     os.system('curl -X POST -i -H "x-insert-key:NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4" -H "Content-Type: application/json" --data "+ json.dumps(strAgent).json() +" https://insights-collector.newrelic.com/v1/accounts/2482859/events')
-    val1=("movii",strAgent.decode('utf-8'))
+    val1=(enterprise,strAgent.decode('utf-8'))
     cursor.execute(sql,val1)
     db.commit()
     req=requests.post(nrAPI, data=strAgent, headers=nrheaders)
@@ -207,7 +208,7 @@ if trigger2.status_code == 200:
     strAgent=strAgent.replace("'","\"")
     print(strAgent)
     os.system('curl -X POST -i -H "x-insert-key:NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4" -H "Content-Type: application/json" --data "+ json.dumps(strAgent).json() +" https://insights-collector.newrelic.com/v1/accounts/2482859/events')
-    val2=("movii",strAgent.decode('utf-8'))
+    val2=(enterprise,strAgent.decode('utf-8'))
     cursor.execute(sql,val2)
     db.commit()
     req=requests.post(nrAPI, data=strAgent, headers=nrheaders)
@@ -235,7 +236,7 @@ if trigger3.status_code == 200:
     strAgent=strAgent.replace("'","\"")
     print(strAgent)
     os.system('curl -X POST -i -H "x-insert-key:NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4" -H "Content-Type: application/json" --data "+ json.dumps(strAgent).json() +" https://insights-collector.newrelic.com/v1/accounts/2482859/events')
-    val3=("movii",strAgent.decode('utf-8'))
+    val3=(enterprise,strAgent.decode('utf-8'))
     cursor.execute(sql,val3)
     db.commit()
     req=requests.post(nrAPI, data=strAgent, headers=nrheaders)

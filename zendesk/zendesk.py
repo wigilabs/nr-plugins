@@ -7,7 +7,8 @@ import requests
 import json
 import ast
 import mysql.connector
-
+import sys
+enterprise=sys.argv[0]
 db = mysql.connector.connect(
   host="tcp.ngrok.io",
   port="16714",
@@ -16,7 +17,7 @@ db = mysql.connector.connect(
   database="LIGHTNING_TEAM"
 )
 cursor=db.cursor();
-sql='INSERT INTO TASKS(SEQ, MONITOR, CLIENT_NAME, DATA_STREAM, TIME_EVENT) VALUES(0, "zabbix", %s, %s, NOW());'
+sql='INSERT INTO TASKS(SEQ, MONITOR, CLIENT_NAME, DATA_STREAM, TIME_EVENT) VALUES(0, "zendesk", %s, %s, NOW());'
 
 # Zenpy accepts an API token
 creds = {
@@ -80,7 +81,7 @@ for comment in zenpy_client.tickets.comments(ticket=index):
 print ('"eventType" : "ticketLog", "user_id" : "{}", "client":"{}", "content":"{}" '.format(last_user, last_client, id_content))
 str='"eventType" : "ticketLog", "user_id" : "{}", "client":"{}", "content":"{}" '.format(last_user, last_client, id_content)
 obj='[{' + str + '}]'
-val=("movii",obj.decode('utf-8'))
+val=(enterprise,obj.decode('utf-8'))
 cursor.execute(sql,val)
 db.commit()
 URL='https://insights-collector.newrelic.com/v1/accounts/2482859/events'

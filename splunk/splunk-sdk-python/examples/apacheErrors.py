@@ -105,7 +105,7 @@ def main(argv):
                 progress, scanned, matched, results))
             sys.stdout.write(status)
             sys.stdout.flush()
-        if stats['isDone'] == '1': 
+        if stats['isDone'] == '1':
             if verbose > 0: sys.stdout.write('\n')
             break
         sleep(2)
@@ -120,7 +120,10 @@ def main(argv):
         content=content.replace('"_si":["debian-splunk","main"],','')
         content=content.replace('[{','[{ "eventType" : "splunkApacheErrors", ')
         print(content.decode('utf-8'))
-        val=("movii",content.decode('utf-8'))
+        f=open("enterprise.txt","r")
+        if f.mode=="r":
+            enterprise=f.read()
+        val=(enterprise,content.decode('utf-8'))
         cursor.execute(sql,val)
         db.commit()
         nrheaders={'Content-type': 'application/json', 'x-insert-key' : 'NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4'}

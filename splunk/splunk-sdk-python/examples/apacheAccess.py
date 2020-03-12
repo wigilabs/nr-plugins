@@ -1,18 +1,4 @@
 #!/usr/bin/env python
-#
-# Copyright 2011-2015 Splunk, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License"): you may
-# not use this file except in compliance with the License. You may obtain
-# a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-# License for the specific language governing permissions and limitations
-# under the License.
 
 """A command line utility for executing Splunk searches."""
 from __future__ import absolute_import
@@ -107,13 +93,14 @@ def main(argv):
                 progress, scanned, matched, results))
             sys.stdout.write(status)
             sys.stdout.flush()
-        if stats['isDone'] == '1': 
+        if stats['isDone'] == '1':
             if verbose > 0: sys.stdout.write('\n')
             break
         sleep(2)
 
     if 'count' not in kwargs_results: kwargs_results['count'] = 0
     results = job.results(**kwargs_results)
+
     while True:
         content = results.read(1024)
         if len(content) == 0: break
@@ -124,7 +111,10 @@ def main(argv):
         content=content.replace('{"preview":false,"init_offset":0,"messages":[],"fields":','')
         content=content.replace('[{ "eventType" : "splunkApacheAccess", "name":"_bkt"},{"name":"_cd"},{"name":"_indextime"},{"name":"_raw"},{"name":"_serial"},{"name":"_si"},{"name":"_sourcetype"},{"name":"_time"},{"name":"host"},{"name":"index"},{"name":"linecount"},{"name":"source"},{"name":"sourcetype"},{"name":"splunk_server"}],"results":','')
         print(content.decode('utf-8'))
-        val=("movii",content.decode('utf-8'))
+        f=open("enterprise.txt","r")
+        if f.mode=="r":
+            enterprise=f.read()
+        val=(enterprise,content.decode('utf-8'))
         cursor.execute(sql,val)
         db.commit()
         nrheaders={'Content-type': 'application/json', 'x-insert-key' : 'NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4'}

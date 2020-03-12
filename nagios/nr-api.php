@@ -5,7 +5,12 @@ $labels=array();
              {
                 $labels[] = $item;
              }
-
+$enterprise = fopen("enterprise.txt","r");
+$e=array();
+        while ($i = fgets($enterprise))
+             {
+                $e[] = $i;
+             }
 $burn=0;
 //Json
 $data= '
@@ -38,7 +43,7 @@ $data= '
         }
          ';
 echo $data;
-$client_n='<CLIENT_NAME>';
+$client_n=$e[0];
 $host="<DB_HOST>";
 $user="<USER>";
 $password="<PASSWORD>";
