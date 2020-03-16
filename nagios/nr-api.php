@@ -43,11 +43,19 @@ $data= '
         }
          ';
 echo $data;
-$client_n=$e[0];
-$host="<DB_HOST>";
-$user="<USER>";
-$password="<PASSWORD>";
-$dbname="LIGHTNING_TEAM";
-$dbconnection=mysqli_connect($host,$user,$password,$dbname);
-$register = mysqli_query($dbconnection,"INSERT INTO TASKS(SEQ, MONITOR, CLIENT_NAME, DATA_STREAM, TIME_EVENT) VALUES(0, 'nagios', '$client_n', '$data', NOW());");
+//$client_n=$e[0];
+//$host="<DB_HOST>";
+//$user="<USER>";
+//$password="<PASSWORD>";
+//$dbname="LIGHTNING_TEAM";
+//$dbconnection=mysqli_connect($host,$user,$password,$dbname);
+//$register = mysqli_query($dbconnection,"INSERT INTO TASKS(SEQ, MONITOR, CLIENT_NAME, DATA_STREAM, TIME_EVENT) VALUES(0, 'nagios', '$client_n', '$data', NOW());");
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL,"http://64.227.31.194:25612/nagios/Nagios;".$data);
+curl_setopt($ch, CURLOPT_POST, 1);
+//curl_setopt($ch, CURLOPT_POSTFIELDS,
+//            "postvar1=value1&postvar2=value2&postvar3=value3");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$server_output = curl_exec($ch);
+curl_close ($ch);
 ?>

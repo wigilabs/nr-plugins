@@ -8,15 +8,7 @@ import json
 import ast
 import mysql.connector
 import sys
-enterprise=sys.argv[0]
-db = mysql.connector.connect(
-  host="tcp.ngrok.io",
-  port="16714",
-  user="root",
-  passwd="",
-  database="LIGHTNING_TEAM"
-)
-cursor=db.cursor();
+halopoint='http://64.227.31.194:25612/zendesk/Zendesk;'
 sql='INSERT INTO TASKS(SEQ, MONITOR, CLIENT_NAME, DATA_STREAM, TIME_EVENT) VALUES(0, "zendesk", %s, %s, NOW());'
 
 # Zenpy accepts an API token
@@ -81,12 +73,13 @@ for comment in zenpy_client.tickets.comments(ticket=index):
 print ('"eventType" : "ticketLog", "user_id" : "{}", "client":"{}", "content":"{}" '.format(last_user, last_client, id_content))
 str='"eventType" : "ticketLog", "user_id" : "{}", "client":"{}", "content":"{}" '.format(last_user, last_client, id_content)
 obj='[{' + str + '}]'
-val=(enterprise,obj.decode('utf-8'))
+val=halopoint+obj.decode('utf-8')
 cursor.execute(sql,val)
 db.commit()
 URL='https://insights-collector.newrelic.com/v1/accounts/2482859/events'
 nrheaders={'Content-type': 'application/json', 'x-insert-key' : 'NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4'}
 req=requests.post(URL, data=obj, headers=nrheaders)
+hpt=requests.post(val)
 print(" >>> Object send: " + obj)
 if req.status_code== 200:
     print("=> Success")

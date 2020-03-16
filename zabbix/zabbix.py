@@ -6,18 +6,18 @@ import os
 import mysql.connector
 import sys
 enterprise=sys.argv[0]
-db = mysql.connector.connect(
-  host="tcp.ngrok.io",
-  port="16714",
-  user="root",
-  passwd="",
-  database="LIGHTNING_TEAM"
-)
+#db = mysql.connector.connect(
+#  host="tcp.ngrok.io",
+#  port="16714",
+#  user="root",
+#  passwd="",
+#  database="LIGHTNING_TEAM"
+#)
 cursor=db.cursor();
 sql='INSERT INTO TASKS(SEQ, MONITOR, CLIENT_NAME, DATA_STREAM, TIME_EVENT) VALUES(0, "zabbix", %s, %s, NOW());'
-
 nrheaders={'Content-type': 'application/json', 'x-insert-key' : 'NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4'}
 nrAPI='https://insights-collector.newrelic.com/v1/accounts/2482859/events'
+halopoint='http://64.227.31.194:25612/zabbix/Zabbix;'
 API='http://64.227.58.169/zabbix/api_jsonrpc.php'
 data = {'jsonrpc': '2.0', 'method': 'user.login', 'params': {  "user": "Admin", "password": "zabbix"},"id": 1 }
 headers = {'Content-type': 'application/json'}
@@ -150,15 +150,13 @@ if response.status_code == 200:
     print(remote)
     os.system('curl -X POST -i -H "x-insert-key:NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4" -H "Content-Type: application/json" --data "+ json.dumps(local).json() +" https://insights-collector.newrelic.com/v1/accounts/2482859/events')
     os.system('curl -X POST -i -H "x-insert-key:NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4" -H "Content-Type: application/json" --data "+ json.dumps(remote).json() +" https://insights-collector.newrelic.com/v1/accounts/2482859/events')
-    val=(enterprise,local.decode('utf-8'))
-    cursor.execute(sql,val)
-    db.commit()
-    val=(enterprise,remote.decode('utf-8'))
-    cursor.execute(sql,val)
-    db.commit()
+
+    val=remote.decode('utf-8')
     #nr
+    val=halopoint+val
     customEvent1=requests.post(nrAPI, data=local, headers=nrheaders)
     customEvent2=requests.post(nrAPI, data=remote, headers=nrheaders)
+    regEvent=request.post(val)
 elif response.status_code == 404:
     print('Not Found.')
 
@@ -179,10 +177,10 @@ if trigger1.status_code == 200:
     strAgent=strAgent.replace("'","\"")
     print(strAgent)
     os.system('curl -X POST -i -H "x-insert-key:NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4" -H "Content-Type: application/json" --data "+ json.dumps(strAgent).json() +" https://insights-collector.newrelic.com/v1/accounts/2482859/events')
-    val1=(enterprise,strAgent.decode('utf-8'))
-    cursor.execute(sql,val1)
-    db.commit()
+    val1=strAgent.decode('utf-8')
+    val1=halopoint+val1
     req=requests.post(nrAPI, data=strAgent, headers=nrheaders)
+    regEvent=request.post(val1)
     if req.status_code== 200:
         print("=> Success")
     else:
@@ -208,10 +206,10 @@ if trigger2.status_code == 200:
     strAgent=strAgent.replace("'","\"")
     print(strAgent)
     os.system('curl -X POST -i -H "x-insert-key:NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4" -H "Content-Type: application/json" --data "+ json.dumps(strAgent).json() +" https://insights-collector.newrelic.com/v1/accounts/2482859/events')
-    val2=(enterprise,strAgent.decode('utf-8'))
-    cursor.execute(sql,val2)
-    db.commit()
+    val2=strAgent.decode('utf-8')
+    val2=halopoint+val2
     req=requests.post(nrAPI, data=strAgent, headers=nrheaders)
+    regEvent=request.post(val2)
     if req.status_code== 200:
         print("=> Success")
     else:
@@ -236,10 +234,11 @@ if trigger3.status_code == 200:
     strAgent=strAgent.replace("'","\"")
     print(strAgent)
     os.system('curl -X POST -i -H "x-insert-key:NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4" -H "Content-Type: application/json" --data "+ json.dumps(strAgent).json() +" https://insights-collector.newrelic.com/v1/accounts/2482859/events')
-    val3=(enterprise,strAgent.decode('utf-8'))
-    cursor.execute(sql,val3)
-    db.commit()
+    val3=strAgent.decode('utf-8')
+    val3=halopoint+val3
+    print (val3)
     req=requests.post(nrAPI, data=strAgent, headers=nrheaders)
+    regEvent=request.post(val3)
     if req.status_code== 200:
         print("=> Success")
     else:
