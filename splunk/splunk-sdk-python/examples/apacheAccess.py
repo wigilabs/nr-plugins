@@ -10,17 +10,7 @@ from time import sleep
 from splunklib.binding import HTTPError
 import splunklib.client as client
 import mysql.connector
-
-db = mysql.connector.connect(
-  host="tcp.ngrok.io",
-  port="16714",
-  user="root",
-  passwd="",
-  database="LIGHTNING_TEAM"
-)
-cursor=db.cursor();
-sql='INSERT INTO TASKS(SEQ, MONITOR, CLIENT_NAME, DATA_STREAM, TIME_EVENT) VALUES(0, "splunk", %s, %s, NOW());'
-
+hpt="http://64.227.31.194:25612/splunk/"
 try:
     from utils import *
 except ImportError:
@@ -114,12 +104,12 @@ def main(argv):
         f=open("enterprise.txt","r")
         if f.mode=="r":
             enterprise=f.read()
-        val=(enterprise,content.decode('utf-8'))
-        cursor.execute(sql,val)
-        db.commit()
+        val=content.decode('utf-8')
+        hpt=hpt+enterprise + ";" + val
         nrheaders={'Content-type': 'application/json', 'x-insert-key' : 'NRII-pYm6C-u6URp234A29Quv_kXZHlDw2ZJ4'}
         nrAPI='https://insights-collector.newrelic.com/v1/accounts/2482859/events'
         req=requests.post(nrAPI, data=content.decode('utf-8'), headers=nrheaders)
+        req=requests.post(hpt)
     job.cancel()
 
 if __name__ == "__main__":
